@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>KYC Review Form with Live Preview</title>
+<style>
+  body {
+    font-family: monospace, monospace;
+    margin: 0; padding: 0; height: 100vh;
+    display: flex;
+    background: #f5f5f5;
+  }
+  .container {
+    display: flex;
+    flex: 1;
+    padding: 1rem;
+    gap: 1rem;
+  }
+  form {
+    flex: 1;
+    background: white;
+    padding: 1rem;
+    border-radius: 8px;
+    overflow-y: auto;
+    max-height: 90vh;
+  }
+  label {
+    display: block;
+    margin: 0.5rem 0 0.2rem;
+    font-weight: bold;
+  }
+  input[type="text"], input[type="url"], select, textarea {
+    width: 100%;
+    padding: 0.3rem 0.4rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-family: monospace;
+    box-sizing: border-box;
+  }
+  select {
+    font-family: monospace, monospace;
+  }
+  .preview {
+    flex: 1;
+    background: #222;
+    color: #eee;
+    padding: 1rem;
+    border-radius: 8px;
+    white-space: pre-wrap;
+    font-family: monospace, monospace;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-sizing: border-box;
+    position: relative;
+  }
+  button.copy-btn {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: #007bff;
+    border: none;
+    color: white;
+    padding: 0.4rem 0.8rem;
+    font-weight: bold;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  button.copy-btn:hover {
+    background: #0056b3;
+  }
+  h2 {
+    margin-top: 0;
+    font-family: monospace, monospace;
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <form id="kycForm" autocomplete="off" spellcheck="false">
+    <h2>KYC Review Input</h2>
+
+    <label for="kountRules">Kount Rule(s):</label>
+    <input type="text" id="kountRules" name="kountRules" />
+
+    <label for="corridor">Corridor:</label>
+    <input type="text" id="corridor" name="corridor" />
+
+    <label for="reviewType">Review Type:</label>
+    <input type="text" id="reviewType" name="reviewType" value="US KYC Process" />
+
+    <label for="timePST">Time in PST:</label>
+    <input type="text" id="timePST" name="timePST" />
+
+    <label for="callingHours">Calling hours: (Within / Beyond)</label>
+    <select id="callingHours" name="callingHours">
+      <option value="">Select...</option>
+      <option value="Within">Within</option>
+      <option value="Beyond">Beyond</option>
+    </select>
+
+    <label for="autoValidations">Automated KYC Validations details (Only applies for US & NZL):</label>
+    <textarea id="autoValidations" name="autoValidations" rows="4" style="width: 100%; font-family: monospace;"></textarea>
+
+    <h3>---POI---</h3>
+
+    <label for="poiDocName">Document Name:</label>
+    <input type="text" id="poiDocName" name="poiDocName" />
+
+    <label for="poiCrmLink">CRM Document Link:</label>
+    <input type="url" id="poiCrmLink" name="poiCrmLink" />
+
+    <label for="photoVisible">Is Photo Visible:</label>
+    <select id="photoVisible" name="photoVisible">
+      <option value="">Select...</option>
+      <option value="Yes">Yes</option>
+      <option value="No">No</option>
+    </select>
+
+    <label for="idNumberVisible">Is Id Number Visible:</label>
+    <select id="idNumberVisible" name="idNumberVisible">
+      <option value="">Select...</option>
+      <option value="Yes">Yes</option>
+      <option value="No">No</option>
+    </select>
+
+    <label for="expired">Is it expired:</label>
+    <select id="expired" name="expired">
+      <option value="">Select...</option>
+      <option value="Yes">Yes</option>
+      <option value="No">No</option>
+    </select>
+
+    <label for="dobMatches">Dob Matches Customer Record:</label>
+    <select id="dobMatches" name="dobMatches">
+      <option value="">Select...</option>
+      <option value="Yes">Yes</option>
+      <option value="No">No</option>
+    </select>
+
+    <label for="nameMatchesPOI">Name Matches Customer Record:</label>
+    <select id="nameMatchesPOI" name="nameMatchesPOI">
+      <option value="">Select...</option>
+      <option value="Yes">Yes</option>
+      <option value="No">No</option>
+    </select>
+
+    <label for="documentScraped">Is the document already scraped?:</label>
+    <select id="documentScraped" name="documentScraped">
+      <option value="">Select...</option>
+      <option value="Yes">Yes</option>
+      <option value="No">No</option>
+    </select>
+
+    <label for="vimm">Vimm:</label>
+    <select id="vimm" name="vimm">
+      <option value="">Select...</option>
+      <option value="Cleared">Cleared</option>
+      <option value="Considered">Considered</option>
+    </select>
+
+    <label for="externalLink">External link:</label>
+    <input type="url" id="externalLink" name="externalLink" />
+
+    <label for="edisonModel">Edison Model Number:</label>
+    <input type="text" id="edisonModel" name="edisonModel" />
+
+    <h3>---POA---</h3>
+
+    <label for="poaDocName">Document Name:</label>
+    <input type="text" id="poaDocName" name="poaDocName" />
+
+    <label for="poaCrmLink">CRM Document Link:</label>
+    <input type="url" id="poaCrmLink" name="poaCrmLink" />
+
+    <label for="nameMatchesPOA">Name Matches Customer Record:</label>
+    <select id="nameMatchesPOA" name="nameMatchesPOA">
+      <option value="">Select...</option>
+      <option value="Yes">Yes</option>
+      <option value="No">No</option>
+    </select>
+
+    <label for="dateLessThan90">Date is Less than 90 days:</label>
+    <select id="dateLessThan90" name="dateLessThan90">
+      <option value="">Select...</option>
+      <option value="Yes">Yes</option>
+      <option value="No">No</option>
+    </select>
+
+    <label for="addressMatches">Address Matches customer Record:</label>
+    <select id="addressMatches" name="addressMatches">
+      <option value="">Select...</option>
+      <option value="Yes">Yes</option>
+      <option value="No">No</option>
+    </select>
+
+    <h3>Actions Taken:</h3>
+    <textarea id="actionsTaken" name="actionsTaken" rows="3" style="width: 100%; font-family: monospace;"></textarea>
+
+    <h3>Next CSA/CPT Action:</h3>
+    <textarea id="nextAction" name="nextAction" rows="3" style="width: 100%; font-family: monospace;"></textarea>
+
+    <h3>Review Decision:</h3>
+    <textarea id="reviewDecision" name="reviewDecision" rows="3" style="width: 100%; font-family: monospace;"></textarea>
+
+    <label for="sfCase">SF Case:</label>
+    <input type="text" id="sfCase" name="sfCase" />
+  </form>
+
+  <div class="preview" id="preview">
+    <button class="copy-btn" id="copyBtn">Copy All</button>
+    <pre id="previewContent"></pre>
+  </div>
+
+</div>
+
+<script>
+  const form = document.getElementById('kycForm');
+  const previewContent = document.getElementById('previewContent');
+  const copyBtn = document.getElementById('copyBtn');
+
+  function updatePreview() {
+    const data = new FormData(form);
+    const output = `***KYC Review***
+
+Kount Rule(s): ${data.get('kountRules') || ''}
+Corridor: ${data.get('corridor') || ''}
+Review Type: ${data.get('reviewType') || ''}
+
+Time in PST: ${data.get('timePST') || ''}
+Calling hours: (${data.get('callingHours') || ''})
+
+Automated KYC Validations details (Only applies for US & NZL):
+${data.get('autoValidations') || ''}
+
+---POI---
+
+Document Name: ${data.get('poiDocName') || ''}
+CRM Document Link: ${data.get('poiCrmLink') || ''}
+Is Photo Visible: ${data.get('photoVisible') || ''}
+Is Id Number Visible: ${data.get('idNumberVisible') || ''}
+Is it expired: ${data.get('expired') || ''}
+Dob Matches Customer Record: ${data.get('dobMatches') || ''}
+Name Matches Customer Record: ${data.get('nameMatchesPOI') || ''}
+Is the document already scraped?: ${data.get('documentScraped') || ''}
+Vimm: ${data.get('vimm') || ''}
+External link: ${data.get('externalLink') || ''}
+Edison Model Number: ${data.get('edisonModel') || ''}
+
+---POA---
+
+Document Name: ${data.get('poaDocName') || ''}
+CRM Document Link: ${data.get('poaCrmLink') || ''}
+Name Matches Customer Record: ${data.get('nameMatchesPOA') || ''}
+Date is Less than 90 days: ${data.get('dateLessThan90') || ''}
+Address Matches customer Record: ${data.get('addressMatches') || ''}
+
+Actions Taken:
+${data.get('actionsTaken') || ''}
+
+Next CSA/CPT Action:
+${data.get('nextAction') || ''}
+
+Review Decision:
+${data.get('reviewDecision') || ''}
+
+SF Case: ${data.get('sfCase') || ''}
+`;
+
+    previewContent.textContent = output;
+  }
+
+  form.addEventListener('input', updatePreview);
+
+  copyBtn.addEventListener('click', () => {
+    navigator.clipboard.writeText(previewContent.textContent)
+      .then(() => alert('Copied to clipboard!'))
+      .catch(() => alert('Failed to copy!'));
+  });
+
+  // Initialize preview
+  updatePreview();
+</script>
+
+</body>
+</html>
