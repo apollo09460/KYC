@@ -242,7 +242,11 @@
     <textarea id="nextAction" name="nextAction" rows="3" style="width: 100%; font-family: monospace;"></textarea>
 
     <h3>Review Decision:</h3>
-    <textarea id="reviewDecision" name="reviewDecision" rows="3" style="width: 100%; font-family: monospace;"></textarea>
+    <select id="reviewDecision" name="reviewDecision" style="width: 100%; font-family: monospace;">
+      <option value="">Select...</option>
+      <option value="KYC Complete">KYC Complete</option>
+      <option value="KYC Incomplete">KYC Incomplete</option>
+    </select>
 
     <label for="sfCase">SF Case:</label>
     <input type="text" id="sfCase" name="sfCase" />
@@ -304,8 +308,7 @@ ${data.get('actionsTaken') || ''}
 Next CSA/CPT Action:
 ${data.get('nextAction') || ''}
 
-Review Decision:
-${data.get('reviewDecision') || ''}
+Review Decision: ${data.get('reviewDecision') || ''}
 
 SF Case: ${data.get('sfCase') || ''}
 `;
