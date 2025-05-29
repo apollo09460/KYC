@@ -24,6 +24,7 @@
     border-radius: 8px;
     overflow-y: auto;
     max-height: 90vh;
+    position: relative;
   }
   label {
     display: block;
@@ -65,22 +66,56 @@
     font-weight: bold;
     border-radius: 4px;
     cursor: pointer;
+    transition: all 0.2s;
   }
   button.copy-btn:hover {
     background: #0056b3;
+  }
+  button.copy-btn.copied {
+    background: #28a745;
+  }
+  button.clear-btn {
+    position: absolute;
+    top: 1rem;
+    right: 6rem;
+    background: #dc3545;
+    border: none;
+    color: white;
+    padding: 0.4rem 0.8rem;
+    font-weight: bold;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  button.clear-btn:hover {
+    background: #a71d2a;
   }
   h2 {
     margin-top: 0;
     font-family: monospace, monospace;
   }
+  .copy-notification {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: #28a745;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 4px;
+    font-family: monospace;
+    display: none;
+    z-index: 1000;
+  }
 </style>
 </head>
 <body>
+
+<div class="copy-notification" id="copyNotification">Copied to clipboard!</div>
 
 <div class="container">
 
   <form id="kycForm" autocomplete="off" spellcheck="false">
     <h2>KYC Review Input</h2>
+    <button type="button" class="clear-btn" id="clearBtn">Clear Form</button>
 
     <label for="kountRules">Kount Rule(s):</label>
     <input type="text" id="kountRules" name="kountRules" />
@@ -136,15 +171,17 @@
     <label for="dobMatches">Dob Matches Customer Record:</label>
     <select id="dobMatches" name="dobMatches">
       <option value="">Select...</option>
-      <option value="Yes">Yes</option>
-      <option value="No">No</option>
+      <option value="Match">Match</option>
+      <option value="Partial Match">Partial Match</option>
+      <option value="Not Match">Not Match</option>
     </select>
 
     <label for="nameMatchesPOI">Name Matches Customer Record:</label>
     <select id="nameMatchesPOI" name="nameMatchesPOI">
       <option value="">Select...</option>
-      <option value="Yes">Yes</option>
-      <option value="No">No</option>
+      <option value="Match">Match</option>
+      <option value="Partial Match">Partial Match</option>
+      <option value="Not Match">Not Match</option>
     </select>
 
     <label for="documentScraped">Is the document already scraped?:</label>
@@ -178,8 +215,9 @@
     <label for="nameMatchesPOA">Name Matches Customer Record:</label>
     <select id="nameMatchesPOA" name="nameMatchesPOA">
       <option value="">Select...</option>
-      <option value="Yes">Yes</option>
-      <option value="No">No</option>
+      <option value="Match">Match</option>
+      <option value="Partial Match">Partial Match</option>
+      <option value="Not Match">Not Match</option>
     </select>
 
     <label for="dateLessThan90">Date is Less than 90 days:</label>
@@ -192,8 +230,9 @@
     <label for="addressMatches">Address Matches customer Record:</label>
     <select id="addressMatches" name="addressMatches">
       <option value="">Select...</option>
-      <option value="Yes">Yes</option>
-      <option value="No">No</option>
+      <option value="Match">Match</option>
+      <option value="Partial Match">Partial Match</option>
+      <option value="Not Match">Not Match</option>
     </select>
 
     <h3>Actions Taken:</h3>
@@ -220,6 +259,8 @@
   const form = document.getElementById('kycForm');
   const previewContent = document.getElementById('previewContent');
   const copyBtn = document.getElementById('copyBtn');
+  const clearBtn = document.getElementById('clearBtn');
+  const copyNotification = document.getElementById('copyNotification');
 
   function updatePreview() {
     const data = new FormData(form);
@@ -274,10 +315,38 @@ SF Case: ${data.get('sfCase') || ''}
 
   form.addEventListener('input', updatePreview);
 
-  copyBtn.addEventListener('click', () => {
-    navigator.clipboard.writeText(previewContent.textContent)
-      .then(() => alert('Copied to clipboard!'))
-      .catch(() => alert('Failed to copy!'));
+  copyBtn.addEventListener('click', async () => {
+    try {
+      await navigator.clipboard.writeText(previewContent.textContent);
+      
+      // Visual feedback
+      copyBtn.classList.add('copied');
+      copyBtn.textContent = 'Copied!';
+      
+      // Show notification
+      copyNotification.style.display = 'block';
+      setTimeout(() => {
+        copyNotification.style.display = 'none';
+      }, 2000);
+      
+      // Reset button after 2 seconds
+      setTimeout(() => {
+        copyBtn.classList.remove('copied');
+        copyBtn.textContent = 'Copy All';
+      }, 2000);
+    } catch (err) {
+      copyBtn.textContent = 'Failed!';
+      setTimeout(() => {
+        copyBtn.textContent = 'Copy All';
+      }, 2000);
+    }
+  });
+
+  clearBtn.addEventListener('click', () => {
+    if (confirm('Are you sure you want to clear all fields?')) {
+      form.reset();
+      updatePreview();
+    }
   });
 
   // Initialize preview
