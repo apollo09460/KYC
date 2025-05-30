@@ -7,13 +7,17 @@
 <style>
   body {
     font-family: monospace, monospace;
-    margin: 0; padding: 0; height: 100vh;
-    display: flex;
+    margin: 0; padding: 0; 
     background: #f5f5f5;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
   }
   .container {
     display: flex;
-    flex: 1;
+    width: 95%;
+    max-width: 1400px;
     padding: 1rem;
     gap: 1rem;
   }
@@ -26,21 +30,33 @@
     max-height: 90vh;
     position: relative;
   }
-  label {
-    display: block;
-    margin: 0.5rem 0 0.2rem;
+  .form-row {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 0.5rem;
+    align-items: center;
+  }
+  .form-row label {
+    min-width: 200px;
     font-weight: bold;
   }
-  input[type="text"], input[type="url"], select, textarea {
+  .form-row input[type="text"], 
+  .form-row input[type="url"], 
+  .form-row select {
+    flex: 1;
+    padding: 0.3rem 0.4rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-family: monospace;
+  }
+  textarea {
     width: 100%;
     padding: 0.3rem 0.4rem;
     border: 1px solid #ccc;
     border-radius: 4px;
     font-family: monospace;
     box-sizing: border-box;
-  }
-  select {
-    font-family: monospace, monospace;
+    margin-bottom: 0.5rem;
   }
   .preview {
     flex: 1;
@@ -89,9 +105,12 @@
   button.clear-btn:hover {
     background: #a71d2a;
   }
+  h2, h3 {
+    margin: 1rem 0 0.5rem;
+    font-family: monospace, monospace;
+  }
   h2 {
     margin-top: 0;
-    font-family: monospace, monospace;
   }
   .copy-notification {
     position: fixed;
@@ -117,139 +136,185 @@
     <h2>KYC Review Input</h2>
     <button type="button" class="clear-btn" id="clearBtn">Clear Form</button>
 
-    <label for="kountRules">Kount Rule(s):</label>
-    <input type="text" id="kountRules" name="kountRules" />
+    <div class="form-row">
+      <label for="kountRules">Kount Rule(s):</label>
+      <input type="text" id="kountRules" name="kountRules" />
+    </div>
 
-    <label for="corridor">Corridor:</label>
-    <input type="text" id="corridor" name="corridor" />
+    <div class="form-row">
+      <label for="corridor">Corridor:</label>
+      <input type="text" id="corridor" name="corridor" />
+    </div>
 
-    <label for="reviewType">Review Type:</label>
-    <input type="text" id="reviewType" name="reviewType" value="US KYC Process" />
+    <div class="form-row">
+      <label for="reviewType">Review Type:</label>
+      <input type="text" id="reviewType" name="reviewType" value="US KYC Process" />
+    </div>
 
-    <label for="timePST">Time in PST:</label>
-    <input type="text" id="timePST" name="timePST" />
+    <div class="form-row">
+      <label for="timePST">Time in PST:</label>
+      <input type="text" id="timePST" name="timePST" />
+    </div>
 
-    <label for="callingHours">Calling hours: (Within / Beyond)</label>
-    <select id="callingHours" name="callingHours">
-      <option value="">Select...</option>
-      <option value="Within">Within</option>
-      <option value="Beyond">Beyond</option>
-    </select>
+    <div class="form-row">
+      <label for="callingHours">Calling hours:</label>
+      <select id="callingHours" name="callingHours">
+        <option value="">Select...</option>
+        <option value="Within">Within</option>
+        <option value="Beyond">Beyond</option>
+      </select>
+    </div>
 
     <label for="autoValidations">Automated KYC Validations details (Only applies for US & NZL):</label>
-    <textarea id="autoValidations" name="autoValidations" rows="4" style="width: 100%; font-family: monospace;"></textarea>
+    <textarea id="autoValidations" name="autoValidations" rows="4"></textarea>
 
     <h3>---POI---</h3>
 
-    <label for="poiDocName">Document Name:</label>
-    <input type="text" id="poiDocName" name="poiDocName" />
+    <div class="form-row">
+      <label for="poiDocName">Document Name:</label>
+      <input type="text" id="poiDocName" name="poiDocName" />
+    </div>
 
-    <label for="poiCrmLink">CRM Document Link:</label>
-    <input type="url" id="poiCrmLink" name="poiCrmLink" />
+    <div class="form-row">
+      <label for="poiCrmLink">CRM Document Link:</label>
+      <input type="url" id="poiCrmLink" name="poiCrmLink" />
+    </div>
 
-    <label for="photoVisible">Is Photo Visible:</label>
-    <select id="photoVisible" name="photoVisible">
-      <option value="">Select...</option>
-      <option value="Yes">Yes</option>
-      <option value="No">No</option>
-    </select>
+    <div class="form-row">
+      <label for="photoVisible">Is Photo Visible:</label>
+      <select id="photoVisible" name="photoVisible">
+        <option value="">Select...</option>
+        <option value="Yes">Yes</option>
+        <option value="No">No</option>
+      </select>
+    </div>
 
-    <label for="idNumberVisible">Is Id Number Visible:</label>
-    <select id="idNumberVisible" name="idNumberVisible">
-      <option value="">Select...</option>
-      <option value="Yes">Yes</option>
-      <option value="No">No</option>
-    </select>
+    <div class="form-row">
+      <label for="idNumberVisible">Is Id Number Visible:</label>
+      <select id="idNumberVisible" name="idNumberVisible">
+        <option value="">Select...</option>
+        <option value="Yes">Yes</option>
+        <option value="No">No</option>
+      </select>
+    </div>
 
-    <label for="expired">Is it expired:</label>
-    <select id="expired" name="expired">
-      <option value="">Select...</option>
-      <option value="Yes">Yes</option>
-      <option value="No">No</option>
-    </select>
+    <div class="form-row">
+      <label for="expired">Is it expired:</label>
+      <select id="expired" name="expired">
+        <option value="">Select...</option>
+        <option value="Yes">Yes</option>
+        <option value="No">No</option>
+      </select>
+    </div>
 
-    <label for="dobMatches">Dob Matches Customer Record:</label>
-    <select id="dobMatches" name="dobMatches">
-      <option value="">Select...</option>
-      <option value="Match">Match</option>
-      <option value="Partial Match">Partial Match</option>
-      <option value="Not Match">Not Match</option>
-    </select>
+    <div class="form-row">
+      <label for="dobMatches">Dob Matches Customer Record:</label>
+      <select id="dobMatches" name="dobMatches">
+        <option value="">Select...</option>
+        <option value="Match">Match</option>
+        <option value="Partial Match">Partial Match</option>
+        <option value="Not Match">Not Match</option>
+      </select>
+    </div>
 
-    <label for="nameMatchesPOI">Name Matches Customer Record:</label>
-    <select id="nameMatchesPOI" name="nameMatchesPOI">
-      <option value="">Select...</option>
-      <option value="Match">Match</option>
-      <option value="Partial Match">Partial Match</option>
-      <option value="Not Match">Not Match</option>
-    </select>
+    <div class="form-row">
+      <label for="nameMatchesPOI">Name Matches Customer Record:</label>
+      <select id="nameMatchesPOI" name="nameMatchesPOI">
+        <option value="">Select...</option>
+        <option value="Match">Match</option>
+        <option value="Partial Match">Partial Match</option>
+        <option value="Not Match">Not Match</option>
+      </select>
+    </div>
 
-    <label for="documentScraped">Is the document already scraped?:</label>
-    <select id="documentScraped" name="documentScraped">
-      <option value="">Select...</option>
-      <option value="Yes">Yes</option>
-      <option value="No">No</option>
-    </select>
+    <div class="form-row">
+      <label for="documentScraped">Is the document already scraped?:</label>
+      <select id="documentScraped" name="documentScraped">
+        <option value="">Select...</option>
+        <option value="Yes">Yes</option>
+        <option value="No">No</option>
+      </select>
+    </div>
 
-    <label for="vimm">Vimm:</label>
-    <select id="vimm" name="vimm">
-      <option value="">Select...</option>
-      <option value="Cleared">Cleared</option>
-      <option value="Considered">Considered</option>
-    </select>
+    <div class="form-row">
+      <label for="vimm">Vimm:</label>
+      <select id="vimm" name="vimm">
+        <option value="">Select...</option>
+        <option value="Cleared">Cleared</option>
+        <option value="Considered">Considered</option>
+      </select>
+    </div>
 
-    <label for="externalLink">External link:</label>
-    <input type="url" id="externalLink" name="externalLink" />
+    <div class="form-row">
+      <label for="externalLink">External link:</label>
+      <input type="url" id="externalLink" name="externalLink" />
+    </div>
 
-    <label for="edisonModel">Edison Model Number:</label>
-    <input type="text" id="edisonModel" name="edisonModel" />
+    <div class="form-row">
+      <label for="edisonModel">Edison Model Number:</label>
+      <input type="text" id="edisonModel" name="edisonModel" />
+    </div>
 
     <h3>---POA---</h3>
 
-    <label for="poaDocName">Document Name:</label>
-    <input type="text" id="poaDocName" name="poaDocName" />
+    <div class="form-row">
+      <label for="poaDocName">Document Name:</label>
+      <input type="text" id="poaDocName" name="poaDocName" />
+    </div>
 
-    <label for="poaCrmLink">CRM Document Link:</label>
-    <input type="url" id="poaCrmLink" name="poaCrmLink" />
+    <div class="form-row">
+      <label for="poaCrmLink">CRM Document Link:</label>
+      <input type="url" id="poaCrmLink" name="poaCrmLink" />
+    </div>
 
-    <label for="nameMatchesPOA">Name Matches Customer Record:</label>
-    <select id="nameMatchesPOA" name="nameMatchesPOA">
-      <option value="">Select...</option>
-      <option value="Match">Match</option>
-      <option value="Partial Match">Partial Match</option>
-      <option value="Not Match">Not Match</option>
-    </select>
+    <div class="form-row">
+      <label for="nameMatchesPOA">Name Matches Customer Record:</label>
+      <select id="nameMatchesPOA" name="nameMatchesPOA">
+        <option value="">Select...</option>
+        <option value="Match">Match</option>
+        <option value="Partial Match">Partial Match</option>
+        <option value="Not Match">Not Match</option>
+      </select>
+    </div>
 
-    <label for="dateLessThan90">Date is Less than 90 days:</label>
-    <select id="dateLessThan90" name="dateLessThan90">
-      <option value="">Select...</option>
-      <option value="Yes">Yes</option>
-      <option value="No">No</option>
-    </select>
+    <div class="form-row">
+      <label for="dateLessThan90">Date is Less than 90 days:</label>
+      <select id="dateLessThan90" name="dateLessThan90">
+        <option value="">Select...</option>
+        <option value="Yes">Yes</option>
+        <option value="No">No</option>
+      </select>
+    </div>
 
-    <label for="addressMatches">Address Matches customer Record:</label>
-    <select id="addressMatches" name="addressMatches">
-      <option value="">Select...</option>
-      <option value="Match">Match</option>
-      <option value="Partial Match">Partial Match</option>
-      <option value="Not Match">Not Match</option>
-    </select>
+    <div class="form-row">
+      <label for="addressMatches">Address Matches customer Record:</label>
+      <select id="addressMatches" name="addressMatches">
+        <option value="">Select...</option>
+        <option value="Match">Match</option>
+        <option value="Partial Match">Partial Match</option>
+        <option value="Not Match">Not Match</option>
+      </select>
+    </div>
 
-    <h3>Actions Taken:</h3>
-    <textarea id="actionsTaken" name="actionsTaken" rows="3" style="width: 100%; font-family: monospace;"></textarea>
+    <label for="actionsTaken">Actions Taken:</label>
+    <textarea id="actionsTaken" name="actionsTaken" rows="3"></textarea>
 
-    <h3>Next CSA/CPT Action:</h3>
-    <textarea id="nextAction" name="nextAction" rows="3" style="width: 100%; font-family: monospace;"></textarea>
+    <label for="nextAction">Next CSA/CPT Action:</label>
+    <textarea id="nextAction" name="nextAction" rows="3"></textarea>
 
-    <h3>Review Decision:</h3>
-    <select id="reviewDecision" name="reviewDecision" style="width: 100%; font-family: monospace;">
-      <option value="">Select...</option>
-      <option value="KYC Complete">KYC Complete</option>
-      <option value="KYC Incomplete">KYC Incomplete</option>
-    </select>
+    <div class="form-row">
+      <label for="reviewDecision">Review Decision:</label>
+      <select id="reviewDecision" name="reviewDecision">
+        <option value="">Select...</option>
+        <option value="KYC Complete">KYC Complete</option>
+        <option value="KYC Incomplete">KYC Incomplete</option>
+      </select>
+    </div>
 
-    <label for="sfCase">SF Case:</label>
-    <input type="text" id="sfCase" name="sfCase" />
+    <div class="form-row">
+      <label for="sfCase">SF Case:</label>
+      <input type="text" id="sfCase" name="sfCase" />
+    </div>
   </form>
 
   <div class="preview" id="preview">
